@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Makmur Jaya Bibit — Pusat Tanaman, Desa Sanggrahan, Prambon</title>
+<meta name="description" content="Makmur Jaya Bibit, pusat tanaman di Desa Sanggrahan, Kecamatan Prambon, Kabupaten Nganjuk. Menyediakan bibit, tanaman, dan kebutuhan berkebun lainnya. Buka 06.00–22.00.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌱</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,450;9..144,560;9..144,650&family=Work+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Makmur Jaya Bibit — design tokens
+   ============================================================ */
+:root{
+  --soil-black:#1B1A14;
+  --leaf-deep:#2F4A34;
+  --leaf-mid:#4C7050;
+  --leaf-bright:#7C9A52;
+  --clay:#B5592B;
+  --clay-deep:#8F4423;
+  --paper:#F3EEE1;
+  --sand:#E4D9BE;
+  --sand-line:#D8C9A3;
+
+  --font-display:'Fraunces', serif;
+  --font-body:'Work Sans', sans-serif;
+  --font-mono:'Space Mono', monospace;
+
+  --radius-lg:28px;
+  --radius-md:16px;
+  --shadow-soft: 0 24px 48px -28px rgba(27,26,20,0.35);
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+}
+
+body{
+  margin:0;
+  font-family:var(--font-body);
+  background:var(--paper);
+  color:var(--soil-black);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+
+img,svg{ display:block; max-width:100%; }
+a{ color:inherit; text-decoration:none; }
+ul{ list-style:none; margin:0; padding:0; }
+h1,h2,h3{ font-family:var(--font-display); margin:0; font-weight:560; }
+p{ margin:0; }
+
+.wrap{
+  width:100%;
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 28px;
+}
+
+.skip-link{
+  position:absolute; left:-999px; top:0;
+  background:var(--leaf-deep); color:var(--paper);
+  padding:10px 16px; border-radius:0 0 8px 0; z-index:999;
+}
+.skip-link:focus{ left:0; }
+
+:focus-visible{
+  outline:3px solid var(--clay);
+  outline-offset:3px;
+}
+
+/* subtle paper grain */
+.grain{
+  position:fixed; inset:0; pointer-events:none; z-index:2000;
+  opacity:0.035; mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ============================================================
+   Header
+   ============================================================ */
+.site-header{
+  position:sticky; top:0; z-index:500;
+  background:rgba(243,238,225,0.86);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--sand-line);
+}
+.header-inner{
+  display:flex; align-items:center; justify-content:space-between;
+  padding-top:16px; padding-bottom:16px;
+  gap:16px;
+}
+.brand{ display:flex; align-items:center; gap:12px; }
+.brand-mark{ width:34px; height:34px; color:var(--leaf-deep); flex:none; }
+.brand-mark svg{ width:100%; height:100%; }
+.brand-text{ display:flex; flex-direction:column; line-height:1.15; }
+.brand-name{ font-family:var(--font-display); font-weight:650; font-size:1.05rem; }
+.brand-sub{ font-family:var(--font-mono); font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--leaf-mid); }
+
+.main-nav{ display:flex; gap:8px; }
+.nav-link{
+  font-size:0.92rem; font-weight:500; padding:8px 14px; border-radius:100px;
+  color:var(--soil-black); position:relative; transition:background .2s ease, color .2s ease;
+}
+.nav-link:hover{ background:var(--sand); }
+.nav-link.active{ color:var(--leaf-deep); font-weight:600; }
+
+.header-right{ display:flex; align-items:center; gap:14px; }
+
+.status-pill{
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.02em;
+  padding:7px 13px; border-radius:100px; background:var(--sand);
+  border:1px solid var(--sand-line); white-space:nowrap;
+}
+.status-dot{ width:8px; height:8px; border-radius:50%; background:var(--leaf-bright); flex:none; }
+.status-pill.is-closed .status-dot{ background:var(--clay); }
+.status-pill.is-open .status-dot{ animation:pulse 2.2s ease-in-out infinite; }
+@keyframes pulse{
+  0%,100%{ box-shadow:0 0 0 0 rgba(124,154,82,0.5); }
+  50%{ box-shadow:0 0 0 5px rgba(124,154,82,0); }
+}
+
+.nav-toggle{
+  display:none; flex-direction:column; justify-content:center; gap:5px;
+  width:38px; height:38px; border:none; background:none; cursor:pointer; padding:0;
+}
+.nav-toggle span{ display:block; width:100%; height:2px; background:var(--soil-black); border-radius:2px; transition:transform .25s ease, opacity .25s ease; }
+.nav-toggle[aria-expanded="true"] span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2){ opacity:0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+
+/* ============================================================
+   Eyebrow / section titles
+   ============================================================ */
+.eyebrow{
+  font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--leaf-mid); margin-bottom:14px;
+}
+.eyebrow--light{ color:var(--leaf-bright); }
+.section-title{ font-size:clamp(1.7rem, 3.2vw, 2.5rem); line-height:1.15; max-width:16ch; }
+.section-title--light{ color:var(--paper); }
+.section-head{ margin-bottom:48px; }
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:var(--font-body); font-weight:600; font-size:0.95rem;
+  padding:14px 24px; border-radius:100px; border:1px solid transparent;
+  cursor:pointer; transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.btn:hover{ transform:translateY(-2px); }
+.btn-primary{ background:var(--clay); color:var(--paper); box-shadow:0 14px 28px -14px rgba(181,89,43,0.65); }
+.btn-primary:hover{ background:var(--clay-deep); }
+.btn-ghost{ background:transparent; border-color:var(--leaf-deep); color:var(--leaf-deep); }
+.btn-ghost:hover{ background:var(--leaf-deep); color:var(--paper); }
+
+/* ============================================================
+   Hero
+   ============================================================ */
+.hero{ position:relative; padding:76px 0 40px; overflow:hidden; }
+.hero-inner{
+  display:grid; grid-template-columns:1.05fr 0.95fr; align-items:center; gap:40px;
+}
+.hero-title{ font-size:clamp(2.6rem, 6vw, 4.6rem); line-height:0.98; margin:0 0 22px; letter-spacing:-0.01em; }
+.hero-title-accent{ color:var(--clay); font-style:italic; font-weight:450; }
+.hero-lede{ font-size:1.12rem; max-width:46ch; color:#3c3a30; margin-bottom:34px; }
+.hero-actions{ display:flex; flex-wrap:wrap; gap:14px; margin-bottom:44px; }
+
+.hero-facts{ display:flex; flex-wrap:wrap; gap:28px; border-top:1px solid var(--sand-line); padding-top:24px; }
+.hero-facts li{ display:flex; flex-direction:column; gap:4px; }
+.fact-label{ font-family:var(--font-mono); font-size:0.66rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--leaf-mid); }
+.fact-value{ font-weight:600; font-size:0.98rem; }
+
+.hero-art{ position:relative; }
+.hero-illustration{ width:100%; height:auto; }
+.sway{ animation:sway 6s ease-in-out infinite; }
+.sway-slow{ animation-duration:7.5s; }
+.sway-fast{ animation-duration:5s; }
+@keyframes sway{
+  0%,100%{ transform:rotate(-1.2deg); }
+  50%{ transform:rotate(1.2deg); }
+}
+.leaf-float{ animation:floaty 5s ease-in-out infinite; }
+.leaf-2{ animation-duration:6.2s; animation-delay:.4s; }
+.leaf-3{ animation-duration:4.4s; animation-delay:.9s; }
+@keyframes floaty{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(-10px); }
+}
+
+.scroll-cue{
+  display:flex; align-items:center; gap:10px; justify-content:center;
+  font-family:var(--font-mono); font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase;
+  color:var(--leaf-mid); margin-top:56px;
+}
+.scroll-cue span{
+  width:1px; height:26px; background:var(--leaf-mid);
+  animation:scrollcue 1.8s ease-in-out infinite;
+}
+@keyframes scrollcue{
+  0%{ transform:scaleY(0.3); transform-origin:top; opacity:.4; }
+  50%{ transform:scaleY(1); transform-origin:top; opacity:1; }
+  100%{ transform:scaleY(0.3); transform-origin:bottom; opacity:.4; }
+}
+
+/* ============================================================
+   About
+   ============================================================ */
+.about{ padding:96px 0; }
+.about-inner{ display:grid; grid-template-columns:0.85fr 1.15fr; gap:64px; align-items:center; }
+.about-blob{ width:100%; height:auto; }
+.about-text{ font-size:1.04rem; color:#3c3a30; margin-bottom:18px; max-width:52ch; }
+.about-hours{
+  margin-top:28px; display:inline-flex; flex-direction:column; gap:2px;
+  background:var(--sand); border:1px solid var(--sand-line); border-radius:var(--radius-md);
+  padding:16px 22px;
+}
+.hours-label{ font-family:var(--font-mono); font-size:0.66rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--leaf-mid); }
+.hours-value{ font-weight:650; font-size:1.1rem; font-family:var(--font-display); }
+.hours-value em{ font-style:normal; font-family:var(--font-body); font-weight:500; font-size:0.85rem; color:#5a5646; margin-left:6px; }
+
+/* ============================================================
+   Produk
+   ============================================================ */
+.produk{ padding:20px 0 100px; }
+.produk-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:24px; }
+.produk-card{
+  background:#fff; border:1px solid var(--sand-line); border-radius:var(--radius-lg);
+  padding:34px 28px; transition:transform .22s ease, box-shadow .22s ease;
+}
+.produk-card:hover{ transform:translateY(-6px); box-shadow:var(--shadow-soft); }
+.produk-icon{
+  width:56px; height:56px; border-radius:16px; background:var(--sand);
+  display:flex; align-items:center; justify-content:center; margin-bottom:20px;
+}
+.produk-icon svg{ width:28px; height:28px; }
+.produk-card h3{ font-size:1.25rem; margin-bottom:10px; }
+.produk-card p{ color:#4a4738; font-size:0.96rem; }
+
+/* ============================================================
+   Lokasi
+   ============================================================ */
+.lokasi{ padding:20px 0 110px; }
+.lokasi-grid{ display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start; }
+.address-block,.ancar-block{ margin-bottom:26px; }
+.address-block h3,.ancar-block h3{ font-size:1.05rem; margin-bottom:8px; color:var(--leaf-deep); }
+.address-block p,.ancar-block p{ color:#3c3a30; font-size:1rem; }
+.btn-map{ margin-bottom:24px; }
+.map-embed{
+  border-radius:var(--radius-md); overflow:hidden; margin-bottom:24px;
+  border:1px solid var(--sand-line); box-shadow:var(--shadow-soft);
+}
+.map-embed iframe{ display:block; filter:grayscale(0.15) sepia(0.08); }
+
+.hours-card{
+  display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  background:var(--sand); border:1px solid var(--sand-line); border-radius:var(--radius-md);
+  padding:18px 22px;
+}
+.status-pill--large{ background:#fff; }
+
+.ancar-map{
+  background:var(--sand); border:1px solid var(--sand-line); border-radius:var(--radius-lg);
+  padding:16px; display:flex; align-items:center; justify-content:center;
+}
+.route-svg{ width:100%; height:auto; }
+.route-path{ stroke-dashoffset:0; animation:dash 30s linear infinite; }
+@keyframes dash{ to{ stroke-dashoffset:-500; } }
+.map-label{ font-family:var(--font-mono); font-size:11px; fill:var(--soil-black); }
+.map-label--small{ font-size:10px; fill:var(--clay-deep); }
+.map-label--sign{ fill:var(--paper); font-size:11px; }
+.map-label--brand{ font-weight:700; font-size:12px; fill:var(--leaf-deep); }
+
+/* ============================================================
+   Kontak
+   ============================================================ */
+.kontak{ background:var(--leaf-deep); padding:96px 0; color:var(--paper); }
+.kontak-inner{ display:flex; flex-direction:column; align-items:center; text-align:center; gap:40px; }
+.kontak-text{ max-width:52ch; margin:18px auto 0; color:#d9e1d3; font-size:1.05rem; }
+.kontak-cards{ display:grid; grid-template-columns:repeat(3, minmax(200px,1fr)); gap:18px; width:100%; }
+.kontak-card{
+  display:flex; align-items:center; gap:14px; text-align:left;
+  background:rgba(243,238,225,0.08); border:1px solid rgba(243,238,225,0.18);
+  border-radius:var(--radius-md); padding:18px 20px;
+  transition:background .2s ease, transform .2s ease;
+}
+a.kontak-card:hover{ background:rgba(243,238,225,0.16); transform:translateY(-3px); }
+.kontak-icon{
+  width:40px; height:40px; border-radius:12px; background:var(--clay);
+  display:flex; align-items:center; justify-content:center; flex:none; color:var(--paper);
+}
+.kontak-label{ display:block; font-family:var(--font-mono); font-size:0.64rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--leaf-bright); margin-bottom:3px; }
+.kontak-value{ display:block; font-weight:600; font-size:0.98rem; }
+
+/* ============================================================
+   Footer
+   ============================================================ */
+.site-footer{ padding:36px 0; border-top:1px solid var(--sand-line); }
+.footer-inner{ display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+.footer-brand{ display:flex; align-items:center; gap:12px; }
+.footer-brand .brand-mark{ color:var(--leaf-deep); width:28px; height:28px; }
+.footer-name{ font-family:var(--font-display); font-weight:650; margin:0; }
+.footer-addr{ margin:0; font-size:0.82rem; color:#5a5646; }
+.footer-copy{ font-size:0.82rem; color:#5a5646; }
+
+/* ============================================================
+   Scroll reveal
+   ============================================================ */
+.reveal{ opacity:0; transform:translateY(22px); transition:opacity .7s ease, transform .7s ease; }
+.reveal.is-visible{ opacity:1; transform:translateY(0); }
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 960px){
+  .hero-inner{ grid-template-columns:1fr; }
+  .hero-art{ order:-1; max-width:340px; margin:0 auto; }
+  .about-inner{ grid-template-columns:1fr; }
+  .about-figure{ max-width:280px; margin:0 auto; }
+  .lokasi-grid{ grid-template-columns:1fr; }
+  .produk-grid{ grid-template-columns:1fr 1fr; }
+  .kontak-cards{ grid-template-columns:1fr; }
+}
+
+@media (max-width: 720px){
+  .main-nav{
+    position:absolute; top:100%; left:0; right:0;
+    background:var(--paper); border-bottom:1px solid var(--sand-line);
+    flex-direction:column; padding:12px 28px 20px; gap:2px;
+    transform-origin:top; transform:scaleY(0); opacity:0; pointer-events:none;
+    transition:transform .22s ease, opacity .22s ease;
+  }
+  .main-nav.is-open{ transform:scaleY(1); opacity:1; pointer-events:auto; }
+  .nav-link{ padding:12px 10px; border-radius:8px; }
+  .nav-toggle{ display:flex; }
+  .header-right{ gap:10px; }
+  .status-pill span:not(.status-dot){ display:none; }
+  .produk-grid{ grid-template-columns:1fr; }
+  .hero{ padding-top:52px; }
+  .about,.produk,.lokasi,.kontak{ padding-top:64px; padding-bottom:64px; }
+}
+
+@media (max-width: 480px){
+  .wrap{ padding:0 20px; }
+  .hero-actions{ flex-direction:column; align-items:stretch; }
+  .hero-actions .btn{ justify-content:center; }
+  .hours-card{ flex-direction:column; align-items:flex-start; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- decorative grain overlay -->
+<div class="grain" aria-hidden="true"></div>
+
+<a class="skip-link" href="#konten">Langsung ke konten</a>
+
+<header class="site-header" id="header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#beranda">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none">
+          <path d="M24 44V24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M24 24C24 24 8 22 8 8C22 8 24 24 24 24Z" fill="currentColor" opacity="0.9"/>
+          <path d="M24 18C24 18 40 16 40 4C26 4 24 18 24 18Z" fill="currentColor" opacity="0.55"/>
+        </svg>
+      </span>
+      <span class="brand-text">
+        <span class="brand-name">Makmur Jaya Bibit</span>
+        <span class="brand-sub">Pusat Tanaman</span>
+      </span>
+    </a>
+
+    <nav class="main-nav" id="main-nav" aria-label="Navigasi utama">
+      <a href="#beranda" class="nav-link">Beranda</a>
+      <a href="#tentang" class="nav-link">Tentang</a>
+      <a href="#produk" class="nav-link">Produk</a>
+      <a href="#lokasi" class="nav-link">Lokasi</a>
+      <a href="#kontak" class="nav-link">Kontak</a>
+    </nav>
+
+    <div class="header-right">
+      <div class="status-pill" id="status-pill">
+        <span class="status-dot" id="status-dot" aria-hidden="true"></span>
+        <span id="status-text">Memuat jam buka…</span>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Buka menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="konten">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="beranda">
+    <div class="wrap hero-inner">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">Pusat Tanaman · Desa Sanggrahan, Prambon, Nganjuk</p>
+        <h1 class="hero-title">
+          Makmur Jaya <span class="hero-title-accent">Bibit</span>
+        </h1>
+        <p class="hero-lede">
+          Bibit dan tanaman yang dirawat langsung di lahan kami, siap dibawa pulang
+          untuk pekarangan, kebun, atau sawah Anda.
+        </p>
+
+        <div class="hero-actions">
+          <a href="https://wa.me/6285187488189" class="btn btn-primary" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2Zm5.8 14.14c-.24.68-1.4 1.3-1.94 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.16-4.94-4.35-.15-.19-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.27-.29.58-.36.78-.36.19 0 .39 0 .56.01.18.01.42-.07.65.5.24.58.82 2 .89 2.15.07.15.12.32.02.51-.1.19-.15.31-.3.48-.15.17-.31.38-.44.51-.15.15-.3.31-.13.6.17.29.76 1.25 1.63 2.02 1.12 1 2.06 1.31 2.35 1.46.29.15.46.13.63-.05.17-.19.72-.84.91-1.13.19-.29.38-.24.63-.14.26.09 1.65.78 1.93.92.29.15.48.22.55.34.07.13.07.72-.17 1.4Z"/></svg>
+            Hubungi via WhatsApp
+          </a>
+          <a href="https://www.tiktok.com/search?q=Makmur%20Jaya%20Bibit" class="btn btn-ghost" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 5.82c-1.02-.9-1.6-2.19-1.6-3.62h-3.13v13.68c0 1.6-1.3 2.9-2.9 2.9a2.9 2.9 0 0 1-2.9-2.9 2.9 2.9 0 0 1 2.9-2.9c.32 0 .63.05.92.15v-3.19a6.1 6.1 0 0 0-.92-.07 6.02 6.02 0 0 0-6.02 6.02 6.02 6.02 0 0 0 6.02 6.02 6.02 6.02 0 0 0 6.02-6.02V9.4a9.1 9.1 0 0 0 5.32 1.71V7.98a5.6 5.6 0 0 1-3.71-2.16Z"/></svg>
+            Cari di TikTok
+          </a>
+        </div>
+
+        <ul class="hero-facts">
+          <li>
+            <span class="fact-label">Jam buka</span>
+            <span class="fact-value" id="hero-hours">06.00 – 22.00</span>
+          </li>
+          <li>
+            <span class="fact-label">Lokasi</span>
+            <span class="fact-value">Kec. Prambon, Kab. Nganjuk</span>
+          </li>
+          <li>
+            <span class="fact-label">Telepon</span>
+            <span class="fact-value">+62 851-8748-8189</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="hero-art reveal" aria-hidden="true">
+        <svg class="hero-illustration" viewBox="0 0 420 460" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="210" cy="430" rx="170" ry="18" fill="#1B1A14" opacity="0.08"/>
+
+          <!-- back pot -->
+          <g class="sway sway-slow" style="transform-origin: 90px 330px;">
+            <path d="M55 320 L125 320 L118 400 Q90 412 62 400 Z" fill="#B5592B"/>
+            <rect x="50" y="308" width="80" height="18" rx="6" fill="#8F4423"/>
+            <path d="M90 308 C60 300 55 260 40 240 C75 235 100 265 92 305 Z" fill="#2F4A34"/>
+            <path d="M90 308 C120 295 128 250 148 228 C110 222 88 262 88 305 Z" fill="#3E5F44"/>
+            <path d="M90 308 C86 280 60 262 45 250" stroke="#213A28" stroke-width="2" fill="none" opacity="0.5"/>
+          </g>
+
+          <!-- main pot -->
+          <g class="sway" style="transform-origin: 230px 300px;">
+            <path d="M175 300 L300 300 L288 410 Q230 428 187 410 Z" fill="#C1652F"/>
+            <rect x="168" y="284" width="140" height="24" rx="8" fill="#98481F"/>
+            <rect x="168" y="284" width="140" height="8" rx="4" fill="#B5592B"/>
+            <path d="M235 284 C210 284 178 250 150 210 C205 195 250 235 248 282 Z" fill="#3E5F44"/>
+            <path d="M235 284 C255 270 300 250 335 235 C310 190 250 210 232 270 Z" fill="#7C9A52"/>
+            <path d="M235 284 C220 245 235 200 225 165 C270 175 275 230 245 278 Z" fill="#4C7050"/>
+            <circle cx="228" cy="165" r="5" fill="#C1652F"/>
+          </g>
+
+          <!-- small front pot -->
+          <g class="sway sway-fast" style="transform-origin: 330px 350px;">
+            <path d="M300 355 L365 355 L358 415 Q332 424 308 415 Z" fill="#8F4423"/>
+            <rect x="296" y="344" width="73" height="16" rx="6" fill="#6B3419"/>
+            <path d="M332 344 C312 340 300 312 288 296 C320 288 340 316 336 342 Z" fill="#7C9A52"/>
+            <path d="M332 344 C350 335 362 312 378 300 C355 280 328 306 326 340 Z" fill="#5C8153"/>
+          </g>
+
+          <!-- floating leaves -->
+          <g fill="#7C9A52" opacity="0.85">
+            <ellipse class="leaf-float leaf-1" cx="55" cy="120" rx="16" ry="7" transform="rotate(-25 55 120)"/>
+            <ellipse class="leaf-float leaf-2" cx="360" cy="90" rx="14" ry="6" transform="rotate(35 360 90)"/>
+            <ellipse class="leaf-float leaf-3" cx="120" cy="60" rx="12" ry="5.5" transform="rotate(10 120 60)"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <div class="scroll-cue reveal" aria-hidden="true">
+      <span></span>
+      Gulir untuk lihat lebih lanjut
+    </div>
+  </section>
+
+  <!-- ================= TENTANG ================= -->
+  <section class="about" id="tentang">
+    <div class="wrap about-inner">
+      <div class="about-figure reveal" aria-hidden="true">
+        <svg viewBox="0 0 320 320" class="about-blob">
+          <path fill="#E4D9BE" d="M160 20c66 0 130 44 138 108 8 66-40 128-108 152-70 25-152-6-172-72C-2 142 34 78 92 44 114 30 137 20 160 20Z"/>
+          <g transform="translate(70,70)">
+            <path d="M90 170 V70" stroke="#2F4A34" stroke-width="5" stroke-linecap="round"/>
+            <path d="M90 100C90 100 30 95 20 40C68 35 92 78 90 100Z" fill="#3E5F44"/>
+            <path d="M90 90C90 90 150 82 165 25C118 18 90 65 90 90Z" fill="#7C9A52"/>
+            <path d="M90 130C90 130 40 128 25 85C62 78 92 108 90 130Z" fill="#4C7050"/>
+            <ellipse cx="90" cy="180" rx="46" ry="12" fill="#B5592B"/>
+            <path d="M50 175 L130 175 L120 210 Q90 220 60 210Z" fill="#C1652F"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="about-copy reveal">
+        <p class="eyebrow">Tentang Kami</p>
+        <h2 class="section-title">Tumbuh dari desa, untuk kebun Anda</h2>
+        <p class="about-text">
+          Makmur Jaya Bibit berdiri di tengah Desa Sanggrahan, Kecamatan Prambon.
+          Kami merawat setiap bibit dan tanaman sendiri sebelum sampai ke tangan
+          pembeli, supaya yang dibawa pulang benar-benar siap tumbuh — di
+          pekarangan rumah, kebun, maupun sawah.
+        </p>
+        <p class="about-text">
+          Buka setiap hari dari pukul 06.00 sampai 22.00, kami menyambut siapa
+          saja yang ingin berhenti sebentar, melihat-lihat, dan bertanya langsung
+          soal tanaman yang cocok untuk lahannya.
+        </p>
+        <div class="about-hours">
+          <span class="hours-label">Jam operasional</span>
+          <span class="hours-value">06.00 &ndash; 22.00 <em>setiap hari</em></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PRODUK ================= -->
+  <section class="produk" id="produk">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Apa yang Kami Sediakan</p>
+        <h2 class="section-title">Dari bibit sampai tanaman siap tanam</h2>
+      </div>
+
+      <div class="produk-grid">
+        <article class="produk-card reveal">
+          <div class="produk-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none">
+              <path d="M24 42V22" stroke="#2F4A34" stroke-width="3" stroke-linecap="round"/>
+              <path d="M24 22C24 22 8 20 6 6C22 6 26 20 24 22Z" fill="#7C9A52"/>
+              <path d="M24 22C24 22 40 20 42 8C28 6 22 20 24 22Z" fill="#3E5F44"/>
+              <circle cx="24" cy="44" r="3" fill="#B5592B"/>
+            </svg>
+          </div>
+          <h3>Bibit</h3>
+          <p>Bibit unggul yang sudah melalui masa semai, siap ditanam dan
+            dikembangkan di lahan Anda sendiri.</p>
+        </article>
+
+        <article class="produk-card reveal">
+          <div class="produk-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none">
+              <rect x="14" y="34" width="20" height="10" rx="3" fill="#B5592B"/>
+              <path d="M24 34V16" stroke="#2F4A34" stroke-width="3" stroke-linecap="round"/>
+              <path d="M24 20C24 20 10 18 8 4C24 4 28 18 24 20Z" fill="#4C7050"/>
+              <path d="M24 26C24 26 38 24 40 12C26 10 22 22 24 26Z" fill="#7C9A52"/>
+            </svg>
+          </div>
+          <h3>Tanaman</h3>
+          <p>Tanaman yang sudah tumbuh dan siap dipindah — tinggal bawa pulang,
+            tinggal tanam.</p>
+        </article>
+
+        <article class="produk-card reveal">
+          <div class="produk-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none">
+              <circle cx="14" cy="30" r="6" fill="#7C9A52"/>
+              <circle cx="30" cy="16" r="7" fill="#3E5F44"/>
+              <circle cx="34" cy="34" r="5" fill="#B5592B"/>
+            </svg>
+          </div>
+          <h3>Dan Lainnya</h3>
+          <p>Kebutuhan berkebun lain juga tersedia — datang langsung atau tanyakan
+            lewat WhatsApp.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LOKASI ================= -->
+  <section class="lokasi" id="lokasi">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Lokasi &amp; Ancar-Ancar</p>
+        <h2 class="section-title">Cara paling gampang menemukan kami</h2>
+      </div>
+
+      <div class="lokasi-grid">
+        <div class="lokasi-copy reveal">
+          <div class="address-block">
+            <h3>Alamat</h3>
+            <p>
+              Jl. Raya Prambon - Kediri, Desa Sanggrahan,<br>
+              Kecamatan Prambon, Kabupaten Nganjuk, Jawa Timur, Indonesia
+            </p>
+          </div>
+
+          <div class="ancar-block">
+            <h3>Ancar-ancar</h3>
+            <p>Dari depan Puskesmas, jalan terus lalu <strong>belok kiri masuk Gang Mentok</strong>. Makmur Jaya Bibit ada di dalam gang, tak jauh dari Jl. Raya Prambon - Kediri.</p>
+          </div>
+
+          <a class="btn btn-primary btn-map"
+             href="https://www.google.com/maps/search/?api=1&query=-7.7072967,112.0225323"
+             target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C7.86 2 4.5 5.36 4.5 9.5c0 5.5 7.5 12.5 7.5 12.5s7.5-7 7.5-12.5C19.5 5.36 16.14 2 12 2Zm0 10.25a2.75 2.75 0 1 1 0-5.5 2.75 2.75 0 0 1 0 5.5Z"/></svg>
+            Buka di Google Maps
+          </a>
+
+          <div class="map-embed">
+            <iframe
+              src="https://www.google.com/maps?q=-7.7072967,112.0225323&output=embed"
+              width="100%" height="220" style="border:0;" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Peta lokasi Makmur Jaya Bibit">
+            </iframe>
+          </div>
+
+          <div class="hours-card">
+            <div>
+              <span class="hours-label">Jam buka hari ini</span>
+              <span class="hours-value" id="lokasi-hours">06.00 &ndash; 22.00</span>
+            </div>
+            <div class="status-pill status-pill--large" id="status-pill-2">
+              <span class="status-dot" id="status-dot-2" aria-hidden="true"></span>
+              <span id="status-text-2">Memuat…</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ancar-map reveal" aria-hidden="true">
+          <svg viewBox="0 0 420 380" class="route-svg" xmlns="http://www.w3.org/2000/svg">
+            <path d="M60 90 C 140 60, 150 150, 230 150 S 330 260, 360 300"
+                  fill="none" stroke="#8F8060" stroke-width="3" stroke-dasharray="2 12"
+                  stroke-linecap="round" class="route-path"/>
+
+            <!-- Puskesmas -->
+            <g transform="translate(20,55)">
+              <rect x="0" y="18" width="72" height="46" rx="6" fill="#F3EEE1" stroke="#2F4A34" stroke-width="2.5"/>
+              <path d="M0 18 L36 0 L72 18Z" fill="#2F4A34"/>
+              <path d="M30 30h12v10h10v12h-10v10h-12v-10h-10v-12h10z" fill="#B5592B"/>
+              <text x="36" y="82" text-anchor="middle" class="map-label">Puskesmas</text>
+            </g>
+
+            <!-- turn arrow -->
+            <g transform="translate(190,118)">
+              <path d="M0 0 C 20 0, 30 10, 30 28" stroke="#B5592B" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <path d="M30 28 L20 22 M30 28 L26 16" stroke="#B5592B" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <text x="4" y="-8" class="map-label map-label--small">belok kiri</text>
+            </g>
+
+            <!-- Gang Mentok -->
+            <g transform="translate(210,150)">
+              <rect x="0" y="0" width="14" height="70" fill="#8F4423"/>
+              <rect x="-18" y="-10" width="80" height="26" rx="4" fill="#2F4A34"/>
+              <text x="22" y="7" text-anchor="middle" class="map-label map-label--sign">Gang Mentok</text>
+            </g>
+
+            <!-- shop -->
+            <g transform="translate(295,255)">
+              <path d="M0 90 V40 L45 15 L90 40 V90Z" fill="#F3EEE1" stroke="#2F4A34" stroke-width="2.5"/>
+              <path d="M-6 40 L45 10 L96 40" fill="none" stroke="#2F4A34" stroke-width="2.5" stroke-linejoin="round"/>
+              <rect x="18" y="55" width="20" height="35" fill="#B5592B"/>
+              <rect x="52" y="55" width="24" height="24" fill="#7C9A52" opacity="0.8"/>
+              <circle cx="45" cy="4" r="9" fill="#7C9A52"/>
+              <path d="M45 4c0 0 -14 -2 -16 -14c12 -2 18 8 16 14Z" fill="#4C7050"/>
+              <text x="45" y="112" text-anchor="middle" class="map-label map-label--brand">Makmur Jaya Bibit</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= KONTAK ================= -->
+  <section class="kontak" id="kontak">
+    <div class="wrap kontak-inner">
+      <div class="reveal">
+        <p class="eyebrow eyebrow--light">Kontak</p>
+        <h2 class="section-title section-title--light">Mampir, telepon, atau sapa kami dulu</h2>
+        <p class="kontak-text">
+          Ada pertanyaan soal bibit atau tanaman yang cocok untuk lahan Anda?
+          Hubungi kami langsung, kami senang membantu.
+        </p>
+      </div>
+
+      <div class="kontak-cards reveal">
+        <a class="kontak-card" href="tel:+6285187488189">
+          <span class="kontak-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+          </span>
+          <span>
+            <span class="kontak-label">Telepon / WhatsApp</span>
+            <span class="kontak-value">+62 851-8748-8189</span>
+          </span>
+        </a>
+
+        <a class="kontak-card" href="https://www.tiktok.com/search?q=Makmur%20Jaya%20Bibit" target="_blank" rel="noopener">
+          <span class="kontak-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.82c-1.02-.9-1.6-2.19-1.6-3.62h-3.13v13.68c0 1.6-1.3 2.9-2.9 2.9a2.9 2.9 0 0 1-2.9-2.9 2.9 2.9 0 0 1 2.9-2.9c.32 0 .63.05.92.15v-3.19a6.1 6.1 0 0 0-.92-.07 6.02 6.02 0 0 0-6.02 6.02 6.02 6.02 0 0 0 6.02 6.02 6.02 6.02 0 0 0 6.02-6.02V9.4a9.1 9.1 0 0 0 5.32 1.71V7.98a5.6 5.6 0 0 1-3.71-2.16Z"/></svg>
+          </span>
+          <span>
+            <span class="kontak-label">TikTok</span>
+            <span class="kontak-value">Makmur Jaya Bibit</span>
+          </span>
+        </a>
+
+        <div class="kontak-card kontak-card--static">
+          <span class="kontak-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </span>
+          <span>
+            <span class="kontak-label">Jam Buka</span>
+            <span class="kontak-value">06.00 &ndash; 22.00 WIB</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none">
+          <path d="M24 44V24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M24 24C24 24 8 22 8 8C22 8 24 24 24 24Z" fill="currentColor" opacity="0.9"/>
+          <path d="M24 18C24 18 40 16 40 4C26 4 24 18 24 18Z" fill="currentColor" opacity="0.55"/>
+        </svg>
+      </span>
+      <div>
+        <p class="footer-name">Makmur Jaya Bibit</p>
+        <p class="footer-addr">Desa Sanggrahan, Kec. Prambon, Kab. Nganjuk, Jawa Timur</p>
+      </div>
+    </div>
+    <p class="footer-copy">&copy; <span id="year"></span> Makmur Jaya Bibit. Pusat Tanaman Desa Sanggrahan.</p>
+  </div>
+</footer>
+
+<script>
+// ============================================================
+// Makmur Jaya Bibit — script.js
+// ============================================================
+(function () {
+  "use strict";
+
+  var OPEN_HOUR = 6;   // 06:00
+  var CLOSE_HOUR = 22; // 22:00
+
+  /* ---------------- Mobile nav toggle ---------------- */
+  var navToggle = document.getElementById("nav-toggle");
+  var mainNav = document.getElementById("main-nav");
+
+  if (navToggle && mainNav) {
+    navToggle.addEventListener("click", function () {
+      var isOpen = mainNav.classList.toggle("is-open");
+      navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      navToggle.setAttribute("aria-label", isOpen ? "Tutup menu" : "Buka menu");
+    });
+
+    mainNav.querySelectorAll(".nav-link").forEach(function (link) {
+      link.addEventListener("click", function () {
+        mainNav.classList.remove("is-open");
+        navToggle.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
+
+  /* ---------------- Live open / closed status ---------------- */
+  function updateStatus() {
+    var now = new Date();
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+    var isOpen = hour >= OPEN_HOUR && hour < CLOSE_HOUR;
+
+    var timeStr =
+      String(hour).padStart(2, "0") + ":" + String(minute).padStart(2, "0");
+
+    var message;
+    if (isOpen) {
+      var hoursLeft = CLOSE_HOUR - hour;
+      message = "Buka sekarang · tutup jam 22.00";
+    } else {
+      message = "Tutup sekarang · buka jam 06.00";
+    }
+
+    [
+      { pill: "status-pill", dot: "status-dot", text: "status-text" },
+      { pill: "status-pill-2", dot: "status-dot-2", text: "status-text-2" },
+    ].forEach(function (ids) {
+      var pill = document.getElementById(ids.pill);
+      var text = document.getElementById(ids.text);
+      if (!pill || !text) return;
+      pill.classList.toggle("is-open", isOpen);
+      pill.classList.toggle("is-closed", !isOpen);
+      text.textContent = message;
+      pill.setAttribute(
+        "title",
+        "Waktu sekarang " + timeStr + " (mengikuti jam perangkat Anda)"
+      );
+    });
+  }
+
+  updateStatus();
+  setInterval(updateStatus, 60 * 1000);
+
+  /* ---------------- Scroll reveal ---------------- */
+  var revealEls = document.querySelectorAll(".reveal");
+
+  if ("IntersectionObserver" in window && revealEls.length) {
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.14, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    revealEls.forEach(function (el) {
+      observer.observe(el);
+    });
+  } else {
+    revealEls.forEach(function (el) {
+      el.classList.add("is-visible");
+    });
+  }
+
+  /* ---------------- Active nav link on scroll ---------------- */
+  var sections = document.querySelectorAll("main section[id]");
+  var navLinks = document.querySelectorAll(".nav-link");
+
+  function setActiveLink() {
+    var scrollPos = window.scrollY + 140;
+    var current = "";
+
+    sections.forEach(function (section) {
+      if (scrollPos >= section.offsetTop) {
+        current = section.id;
+      }
+    });
+
+    navLinks.forEach(function (link) {
+      var isActive = link.getAttribute("href") === "#" + current;
+      link.classList.toggle("active", isActive);
+    });
+  }
+
+  window.addEventListener("scroll", setActiveLink, { passive: true });
+  setActiveLink();
+
+  /* ---------------- Header shadow on scroll ---------------- */
+  var header = document.getElementById("header");
+  function toggleHeaderShadow() {
+    if (!header) return;
+    header.style.boxShadow =
+      window.scrollY > 8 ? "0 8px 24px -18px rgba(27,26,20,0.4)" : "none";
+  }
+  window.addEventListener("scroll", toggleHeaderShadow, { passive: true });
+  toggleHeaderShadow();
+
+  /* ---------------- Footer year ---------------- */
+  var yearEl = document.getElementById("year");
+  if (yearEl) {
+    yearEl.textContent = new Date().getFullYear();
+  }
+})();
+
+</script>
+</body>
+</html>
